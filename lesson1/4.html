@@ -29,12 +29,14 @@
 -->
   <script>
     "use strict";
+
     const a = +prompt('Введите число');
     alert(`В числе ${a} количество ` +
       `сотен: ${Math.trunc((a % 1000) / 100)}, ` +
       `десятков: ${Math.trunc((a % 100) / 10)}, ` +
       `единиц: ${Math.trunc((a % 10))}`);
   </script>
+
 </body>
 
 </html>
