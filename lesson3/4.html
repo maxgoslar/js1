@@ -52,10 +52,13 @@
 
     // не придумал, как проверить каждый элемент на наличие свойства photos,
     // поэтому пришлось вручную добавить свойство и пустой массив.
+    // 1
     products[3].photos = [];
     const productsWithPhotos = products.filter(item => item.photos.length > 0);
     console.log(productsWithPhotos);
-
+    // 2 - после подглядывания в решебник
+    // const productsWithPhotos = products.filter(item => item.photos?.length > 0);
+    // console.log(productsWithPhotos);
 
     /*2. Необходимо отсортировать массив products используя метод sort по цене,
     начиная с самой маленькой, заканчивая самой большой ценой, после чего вывести
