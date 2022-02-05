@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Homework</title>
+</head>
+
+<body>
+  <!--
+Обязательное задание.
+
+Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
+Необходимо создать функцию-конструктор/класс для поста в социальной сети.
+Названия: `PostES5` для es5 стиля и `PostES6` для es6 стиля.
+Пост должен хранить:
+1. Автора поста (имени достаточно).
+2. Текст поста.
+3. Дату и время последнего изменения поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Каждому экземпляру объекта должен быть доступен метод `edit`, который будет
+менять текст поста.
+
+---
+
+Необходимо создать функцию-конструктор/класс для закрепленного поста в
+социальной сети.
+Названия: `AttachedPostES5` для es5 стиля и `AttachedPostES6` для es6 стиля.
+Закрепленный пост должен наследоваться от обычного поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Закрепленный пост должен иметь свойство `highlighted`, в котором по умолчанию
+будет лежать значение false (это свойство будет обозначать, будет ли наш
+закрепленный пост подсвечен).
+У экземпляров объекта закрепленного поста должен быть метод с названием
+`makeTextHighlighted`, который сделает так, чтобы наш пост стал подсвеченным
+(будет менять свойство `highlighted`).
+
+---
+
+Подсказки:
+1. Задание сложное, советую делать по аналогии с примером на онлайн-занятии.
+2. Обратите внимание что пост хранит "дату и время последнего изменения
+поста", это значит что если пост кто-то изменит (например вызовет какой-то
+метод, который изменит что-то в посте), дата и время последнего изменения
+поста также должна измениться.
+3. Выполняйте все по порядку, не стоит пытаться сделать все сразу, иначе можно
+что-нибудь пропустить.
+4. Если непонятно условие - задайте вопрос.
+-->
+  <script>
+    "use strict";
+
+    // ES5
+
+    function PostES5(author, text, datetime) {
+      this.author = author;
+      this.text = text;
+      this.datetime = datetime;
+    }
+
+    PostES5.prototype.edit = function () {
+      this.text = prompt('ES5 Обновите текст поста');
+      this.datetime = new Date().toLocaleString();
+      return this.text;
+    }
+
+    const authorPost = prompt('ES5 Введите имя автора');
+    const textPost = prompt('ES5 Введите текст поста');
+    const datetime = new Date().toLocaleString();
+
+    const mainPost = new PostES5(authorPost, textPost, datetime);
+
+    let toEdit = confirm('ES5 Редактировать?');
+
+    let updatedPost = new PostES5(mainPost.author, mainPost.text,
+      mainPost.datetime);
+
+    if (toEdit) {
+      updatedPost.text = updatedPost.edit();
+    };
+
+    //-----------------------------------------
+
+    function AttachedPostES5(author, text, datetime, highlight) {
+      PostES5.call(this, author, text, datetime);
+      this.highlight = highlight;
+    }
+
+    AttachedPostES5.prototype.makeTextHighlighted = function () {
+      return this.highlight = 1;
+    }
+
+    const highlight = 0;
+    const highlightedPost = new AttachedPostES5(
+      updatedPost.author,
+      updatedPost.text,
+      updatedPost.datetime,
+      highlight);
+
+    let toHighlight = confirm('ES5 Закрепить пост?');
+
+    if (toHighlight) {
+      highlightedPost.highlight = highlightedPost.makeTextHighlighted();
+    };
+
+    if (toEdit && toHighlight) {
+      alert(`
+          ES5\n
+          Начальный пост: ${mainPost.author}, ${mainPost.text}, 
+          ${mainPost.datetime}\n
+          Отредактированный текст: ${updatedPost.text}\n
+          Время редактирования: ${updatedPost.datetime}\n
+          Пост закреплен.`);
+    } else if (toEdit) {
+      alert(`
+          ES5\n
+          Начальный пост: ${mainPost.author}, ${mainPost.text}, 
+          ${mainPost.datetime}\n
+          Отредактированный текст: ${updatedPost.text}\n
+          Время редактирования: ${updatedPost.datetime}\n
+          Пост не закреплен.`);
+    } else if (toHighlight) {
+      alert(`
+          ES5\n
+          Начальный пост: ${mainPost.author}, ${mainPost.text}, 
+          ${mainPost.datetime}\n
+          Текст не редактировали.\n
+          Пост закреплен.`);
+    } else {
+      alert(`
+          ES5\n
+          Начальный пост: ${mainPost.author}, ${mainPost.text}, 
+          ${mainPost.datetime}\n
+          Текст не редактировали и не закрепляли.\n`);
+    }
+
+    // ES6 
+
+    class PostES6 {
+      constructor(author, text, datetime) {
+        this.author = author;
+        this.text = text;
+        this.datetime = datetime;
+      }
+
+      edit() {
+        this.text = prompt('ES6 Обновите текст поста');
+        this.datetime = new Date().toLocaleString();
+        return this.text;
+      }
+    }
+
+    const authorPostES6 = prompt('ES6 Введите имя автора');
+    const textPostES6 = prompt('ES6 Введите текст поста');
+    const datetimeES6 = new Date().toLocaleString();
+
+    const mainPostES6 = new PostES6(authorPostES6, textPostES6, datetimeES6);
+
+    let toEditES6 = confirm('ES6 Редактировать?');
+
+    let updatedPostES6 = new PostES6(mainPostES6.author, mainPostES6.text,
+      mainPostES6.datetime);
+
+    if (toEditES6) {
+      updatedPostES6.text = updatedPostES6.edit();
+    };
+
+    //-----------------------------------------
+
+    class AttachedPostES6 {
+      constructor(author, text, datetime, highlight) {
+        this.author = author;
+        this.text = text;
+        this.datetime = datetime;
+        this.highlight = highlight;
+      }
+
+      makeTextHighlighted() {
+        return this.highlight = 1;
+      }
+    }
+
+    const highlightES6 = 0;
+    const highlightedPostES6 = new AttachedPostES6(
+      updatedPostES6.author,
+      updatedPostES6.text,
+      updatedPostES6.datetime,
+      highlightES6);
+
+    let toHighlightES6 = confirm('Закрепить пост?');
+
+    if (toHighlightES6) {
+      highlightedPostES6.highlight = highlightedPostES6.makeTextHighlighted();
+    };
+
+
+    if (toEditES6 && toHighlightES6) {
+      alert(`
+        ES6\n
+        Начальный пост: ${mainPostES6.author}, ${mainPostES6.text}, 
+        ${mainPostES6.datetime}\n
+        Отредактированный текст: ${updatedPostES6.text}\n
+        Время редактирования: ${updatedPostES6.datetime}\n
+        Пост закреплен.`);
+    } else if (toEditES6) {
+      alert(`
+        ES6\n
+        Начальный пост: ${mainPostES6.author}, ${mainPostES6.text}, 
+        ${mainPostES6.datetime}\n
+        Отредактированный текст: ${updatedPostES6.text}\n
+        Время редактирования: ${updatedPostES6.datetime}\n
+        Пост не закреплен.`);
+    } else if (toHighlightES6) {
+      alert(`
+        ES6\n
+        Начальный пост: ${mainPostES6.author}, ${mainPostES6.text}, 
+        ${mainPostES6.datetime}\n
+        Текст не редактировали.\n
+        Пост закреплен.`);
+    } else {
+      alert(`
+        ES6\n
+        Начальный пост: ${mainPostES6.author}, ${mainPostES6.text}, 
+        ${mainPostES6.datetime}\n
+        Текст не редактировали и не закрепляли.\n`);
+    }
+  </script>
+</body>
+
+</html>
