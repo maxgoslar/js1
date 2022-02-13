@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Homework</title>
+</head>
+
+<body>
+  <!--
+Обязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+  <p class="super_element">Привет</p>
+
+  <img src="https://placeimg.com/50/50/animals" alt="">
+  <img src="https://placeimg.com/50/50/arch" alt="">
+  <img src="https://placeimg.com/50/50/nature" alt="">
+  <img src="https://placeimg.com/50/50/people" alt="">
+  <img src="https://placeimg.com/50/50/tech" alt="">
+  <img src="https://placeimg.com/50/50/tech/grayscale" alt="">
+  <img src="https://placeimg.com/50/50/tech/sepia" alt="">
+
+  <br>
+
+  <button>Кнопка</button>
+  <button class="super_element">Кнопка с классом btn</button>
+  <button>Кнопка</button>
+
+  <br>
+
+  <textarea></textarea>
+
+  <br>
+
+  <ul class='11'>
+    <li class='11'>
+      <button>Кнопка 1</button>
+    </li>
+    <li>
+      <button>Кнопка 2</button>
+    </li>
+    <li>
+      <button>Кнопка 3</button>
+    </li>
+    <li>
+      <button>Кнопка 4</button>
+    </li>
+  </ul>
+
+  <script>
+    "use strict";
+
+    /*
+    1. Необходимо вывести сообщение в консоль "все теги прогрузились", когда все
+    теги будут созданы браузером.
+    */
+    console.log('1');
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log('все теги прогрузились');
+    });
+
+    /*
+    2. Необходимо вывести сообщение в консоль "страница загрузилась", когда все
+    ресурсы страницы будут загружены.
+    */
+    console.log('2');
+    window.addEventListener('load', function () {
+      console.log('страница загрузилась');
+    });
+
+    /*
+    3. При клике на какой-либо тег на странице в консоль должно выводиться
+    сообщение наподобии:
+    Класс "super_element" присутствует в элементе "div".
+    сообщение должно определять присутствует или отсутвтует класс "super_element"
+    у элемента, а также выводить в нижнем регистре верный тег в данной строке, по
+    которому был совершен клик.
+    Необходимо использовать делегирование.
+    */
+    console.log('3');
+
+    const elms = document.querySelectorAll('*');
+
+    function myFunc() {
+      // event.stopPropagation(); - не понял, как сделать так, чтобы
+      // эта команда не влияла на задание 5. По отдельности работают.
+      // Без этой строки функция выполняется по несколько раз, это неправильно ;)
+
+      // event.stopPropagation();
+      // console.log(event);
+      if (event.target.className === '') {
+        console.log(`В ${event.target.nodeName.toLowerCase()} классов нет`);
+        return;
+      }
+      console.log(`Класс ${event.target.className} присутствует ` +
+        `в элементе ${event.target.nodeName.toLowerCase()}`);
+    }
+
+    for (const elm of elms) {
+      elm.addEventListener('click', myFunc);
+    };
+
+    /*
+    4. Сделайте, чтобы при наведении на textarea в консоли появлялось сообщение:
+    "Вы навели на textarea."
+     */
+    console.log('4');
+
+    function myFuncMouse() {
+      event.stopPropagation();
+      if (event.target.nodeName.toLowerCase() != 'textarea') {
+        return;
+      }
+      console.log(`Вы навели на textarea.`);
+    }
+
+    for (const elm of elms) {
+      elm.addEventListener('mouseover', myFuncMouse);
+    };
+
+    /*
+    5. Необходимо повесить событие клика на тег ul. В обработчике события в
+    консоль необходимо выводить текст, который записан внутри элемента кнопки,
+    по которой был произведен клик.
+    Если клик был не по кнопке, то ничего выводить не нужно.
+    Необходимо использовать делегирование.
+     */
+    console.log('5');
+
+    document.querySelector('ul').addEventListener('click', event => {
+      if (event.target.nodeName.toLowerCase() != 'button') {
+        return;
+      };
+      console.log(event.target.innerText);
+    });
+
+
+    /*
+    6. Вопрос: Почему в console.log пишется сначала текст из 5 задания и только
+    потом выводится текст из 3 задания, если мы кликаем по кнопкам в ul?
+    Ответ необходимо написать здесь же, под этим комментарием, своими словами.
+    */
+    console.log('6');
+    /*
+    У меня задание 3 показывает 5 команд при клике на кнопку. Происходит это потому,
+    что при всплытии проиграмма проходит button, li, ul, body, html.
+    
+    После первых трех тегов отрабатывает функция в задании 5, поэтому сначала я вижу
+    3 текста из задания 3, потом 1 текст из задания 5, и потом 2 текста 
+    из задания 3, то есть строго "по пути всплытия".
+    
+    Как один и тот же "КЛИК" в задании 3 подвергнуть stopPropagation и оставить
+    его работаютщим в задании 5, я не понял.
+
+    По отдельости и задания 3, и задание 5 решены.
+    */
+
+    /*
+    7. С помощью JS необходимо изменить цвет заднего фона каждого второго тега li.
+     */
+    console.log('7');
+
+    // сдаюсь, нет сил уже ))
+  </script>
+</body>
+
+</html>
