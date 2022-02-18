@@ -68,7 +68,10 @@
     должно моментально отображаться в span. То есть при печати в input'е тег span
     также должен меняться.
     */
-    console.log('1');
+    console.log('---6.2.1---');
+    document.querySelector('input[id=from]').addEventListener('input', event => {
+      document.querySelector('span').innerText = event.target.value;
+    });
 
     /*
     2. При клике на кнопку с классом messageBtn необходимо элементу с классом
@@ -76,7 +79,12 @@
     1) добавить два класса: animate__animated и animate__fadeInLeftBig
     2) поставить данному элементу стиль visibility в значение 'visible'.
      */
-
+    console.log('---6.2.2---');
+    document.querySelector('button.messageBtn').addEventListener('click', event => {
+      const el = document.querySelector('.message');
+      el.classList.add('animate__animated', 'animate__fadeInLeftBig');
+      el.style.visibility = 'visible';
+    });
 
     /*
     3. Необходимо при отправке формы проверить, заполнены ли все поля в этой
@@ -89,6 +97,56 @@
     данному полю).
     Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
      */
+
+    /**
+     * с задачей частично справился. 
+     * сложность, которую не смог преодолеть - как на кнопку повесить результаты
+     * событий в обои окнах формы. По идеее, заходя на сайт и сразу кликая на 
+     * кнопку отправить, 
+     */
+    console.log('---6.2.3---');
+
+    const inputs = document.querySelectorAll('.form-control');
+
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].classList.add('empty')
+      error(inputs[i]);
+      notEmpty(inputs[i]);
+    };
+
+    const sendButton = document.querySelector('form button');
+    sendButton.addEventListener('click', event => {
+      const empties = document.querySelectorAll('.form-control.empty');
+      for (let i = 0; i < empties.length; i++) {
+        empties[i].classList.add('error');
+      };
+      if (empties.length === 0) {
+        alert(`Данные отправлены`);
+      };
+    });
+
+    function error(a) {
+      a.addEventListener('focus', event => {
+        updateClasses(a, event);
+      });
+      a.addEventListener('blur', event => {
+        a.classList.remove('error');
+      })
+    }
+
+    function notEmpty(b) {
+      b.addEventListener('input', event => {
+        updateClasses(b, event);
+      })
+    }
+
+    function updateClasses(q, event) {
+      if (event.target.value) {
+        q.classList.remove('error', 'empty');
+      } else {
+        q.classList.add('error', 'empty');
+      }
+    }
   </script>
 </body>
 

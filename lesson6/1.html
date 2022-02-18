@@ -45,17 +45,36 @@
     1. Установите всем элементам с классом "productName" размер шрифта 24px.
      */
     console.log('1');
+    const els = document.querySelectorAll('.productName');
+    for (let i = 0; i < els.length; i++) {
+      console.log(els[i]);
+      els[i].style.cssText = 'font-size: 24px';
+    }
 
     /*
     2. Установите всем элементам с классом "product" внешний отступ справа 50px.
      */
     console.log('2');
+    const prods = document.querySelectorAll('.product');
+    for (let i = 0; i < prods.length; i++) {
+      console.log(prods[i]);
+      prods[i].style.cssText = 'margin-right: 50px;';
+    }
 
     /*
     3. При клике на кнопку "В корзину" название кнопки должно поменяться на
     "Добавлено" и кнопка должна стать неактивной.
      */
     console.log('3');
+
+    const inBinEls = document.querySelectorAll('button');
+
+    for (let i = 0; i < inBinEls.length; i++) {
+      inBinEls[i].addEventListener('click', event => {
+        inBinEls[i].innerText = 'Добавлено';
+        inBinEls[i].disabled = true;
+      })
+    };
 
     /*
     4. Создайте полную (глубокую) копию элемента с классом product, измените в
@@ -65,13 +84,54 @@
     отображенный товар на странице на созданную копию. У данной копии также
     должен правильно работать код из 3-го задания.
      */
-    console.log('3');
+    console.log('4');
+
+    const linkItem = 'https://picsum.photos/id/1080/200/300';
+    const titleItem = 'Товар 4';
+    const replaceItem = prods.length - 1;
+
+    const itemNew = new Item('.product', linkItem, titleItem, replaceItem);
+
+    function Item(selector, link, text, position) {
+      const elBase2 = document.querySelector(selector);
+
+      const elClone2 = elBase2.cloneNode(true);
+
+      elClone2.children[1].src = link;
+      elClone2.children[0].innerText = text;
+      prods[position].replaceWith(elClone2);
+
+      elClone2.addEventListener('click', event => {
+        elClone2.children[2].innerText = 'Добавлено';
+        elClone2.children[2].disabled = true;
+      });
+    }
+
 
     /*
     5. По истечению 2 секунд с момента открытия страницы первый товар должен быть
     удален из html.
      */
-    console.log('5');
+    console.log('---5---');
+
+    let t = 0;
+    const durationInSec = 2; // задержка в секундах
+    const itemToHide = 1; // 1, 2, 3... - номера товаров
+
+
+    function hideItem(position, duration) {
+      setTimeout(() => {
+        prods[position].outerHTML = '';
+        t = performance.now();
+        console.log(`конец - ${Math.round(t/100)/10}`);
+      }, duration * 1000);
+    }
+
+    window.addEventListener('load', function () {
+      t = performance.now();
+      console.log(`начало - ${Math.round(t/100)/10}`);
+      hideItem(itemToHide - 1, durationInSec);
+    });
   </script>
 </body>
 
